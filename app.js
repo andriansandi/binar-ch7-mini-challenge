@@ -4,6 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// include session & flash
+const session = require('express-session')
+const flash = require('express-flash')
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -18,6 +22,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// setting session handler
+app.use(session({
+  secret: 'cY@05#lP^nX1%MzLx$n3RwUBqQ1UQCWSs6DptBMumJI4kuRjFL',
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Setting passport
+const passport = require('./lib/passport')
+app.use(passport.initialize());
+app.use(passport.session());
+
+// setting flash
+app.use(flash());
 
 // Router
 app.use('/', indexRouter);
