@@ -6,6 +6,10 @@
         <div class="col-6 mx-auto">
             <form class="mt-5" method="POST" action="/users/login">
                 <h1 class="mb-2">Login</h1>
+                <!-- Code ini akan berjalan bila terjadi error -->
+                <% if (messages.error)  { %>
+                    <div class="alert alert-danger" role="alert"><%= messages.error %></div>
+                <% } %>
                 <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                     <input type="username" name="username" class="form-control">

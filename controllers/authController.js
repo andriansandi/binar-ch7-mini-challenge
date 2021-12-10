@@ -11,7 +11,9 @@ const bcrypt = require('bcrypt');
 module.exports = {
     // menampilkan dashboard users
     dashboard: (req, res) => {
-        res.render('users/dashboard');
+        res.render('users/dashboard', {
+            user: req.user
+        });
     },
     // proses register
     doRegister: (req, res, next) => {
@@ -26,27 +28,11 @@ module.exports = {
         res.render('users/register');
     },
     // proses login
-    doLogin: async (req, res, next) => {
-        const { username, password } = req.body;
-
-        // Check username sudah ada di DB atau belum 
-        try {
-            const user = await User.findOne({ where: { username }});
-
-            if(!user) res.redirect('/users/login');
-
-            // compare password dengan bcrypt
-            if(bcrypt.compareSync(password, user.password)) {
-                // password sama
-                res.redirect('/users');
-            } else {
-                // password tidak sama
-                res.redirect('/users/login');
-            }
-        } catch(error) {
-            next(error);
-        }
-    },
+    doLogin: passport.authenticate('local', {
+        successRedirect: '/users',
+        failureRedirect: '/users/login',
+        failureFlash: true // untuk mengaktifkan express flash
+    }),
     //menampilkan form login
     formLogin: (req, res, next) => {
         res.render('users/login')

@@ -7,11 +7,27 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
+            <a class="nav-link active" aria-current="page" href="/users">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/products">Products</a>
           </li>
+        </ul>
+      </div>
+      <div class="d-flex">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <% if (typeof user !== 'undefined') { %>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Hi, <%= user.username %></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/products">Logout</a>
+          </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/login">Login</a>
+            </li>
+          <% } %>
         </ul>
       </div>
     </div>

@@ -1,10 +1,27 @@
 <%- include('../partials/header'); -%>
-<%- include('../partials/navbar'); -%>
+<% if (user) { %>
+<%- include('../partials/navbar', { user: user }); -%>
+<% } else { %>
+<%- include('../partials/navbar', { user: null }); -%>
+<% } %>
 
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h1>Halaman Dashboard</h1>
+            <div style="margin-top: 80px">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>ID:</td>
+                            <td><%= user.id %></td>
+                        </tr>
+                        <tr>
+                            <td>Username:</td>
+                            <td><%= user.username %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
