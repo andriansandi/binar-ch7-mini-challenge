@@ -5,6 +5,8 @@ const {
 
 // Include library bcrypt
 const bcrypt = require('bcrypt');
+// Include module JWT
+const jwt = require('jsonwebtoken')
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -44,6 +46,18 @@ module.exports = (sequelize, DataTypes) => {
       } catch(err) {
         return Promise.reject(err);
       }
+    }
+
+    // generate token JWT
+    generateToken = () => {
+      const payload = {
+        id: this.id,
+        username: this.username
+      }
+      // Generate token
+      return jwt.sign(payload, 'berbinar', {
+        algorithm: 'HS512'
+      })
     }
 
   };
